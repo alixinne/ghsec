@@ -36,9 +36,9 @@
 //!
 //! ## Supported checks
 //!
-//! - [`default_workflow_permissions`](checks/default_worfklow_permissions/index.html): use secure
+//! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html): use secure
 //! defaults for "Default Workflow Permissions"
-//! - [`repository_secrets`](checks/repository_secrets/index.html): list repositories containing
+//! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html): list repositories containing
 //! GitHub Actions secrets
 
 use std::str::FromStr;
