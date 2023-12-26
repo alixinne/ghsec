@@ -13,6 +13,7 @@ struct DefaultRepositoryWorkflowPermissions {
     can_approve_pull_request_reviews: bool,
 }
 
+#[derive(Default, Debug, Clone, Copy)]
 pub struct DefaultWorkflowPermissions;
 
 #[async_trait]

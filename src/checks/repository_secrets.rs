@@ -20,6 +20,7 @@ struct Secret {
     updated_at: DateTime<Utc>,
 }
 
+#[derive(Default, Debug, Clone, Copy)]
 pub struct RepositorySecrets;
 
 #[async_trait]

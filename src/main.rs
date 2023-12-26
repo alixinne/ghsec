@@ -1,34 +1,21 @@
 use clap::Parser;
 use futures_util::{stream::FuturesUnordered, StreamExt, TryStreamExt};
 use octocrab::{models::Repository, Octocrab};
-use secure_string::SecureString;
 use tokio::pin;
-use tracing::{debug, info, level_filters::LevelFilter};
+use tracing::{info, level_filters::LevelFilter};
 use tracing_subscriber::EnvFilter;
 
+mod args;
+use args::Args;
+
 mod checks;
-use checks::{Check, CheckCtx, DefaultWorkflowPermissions, RepositorySecrets};
-
-#[derive(Debug, Parser)]
-pub struct Args {
-    /// GitHub Personal Access Token
-    #[arg(long, env = "GITHUB_TOKEN")]
-    github_token: SecureString,
-
-    /// Should we fix things?
-    #[arg(long)]
-    fix: bool,
-}
+use checks::{Check, CheckCtx};
 
 #[tracing::instrument(name="repository", level="info", skip_all, fields(repository = repository.full_name.as_ref().unwrap()))]
 async fn process_repo<'c>(ctx: &'c CheckCtx<'c>, repository: Repository) -> anyhow::Result<()> {
-    debug!("inspecting default workflow permission");
-
-    DefaultWorkflowPermissions.run(ctx, &repository).await?;
-
-    debug!("inspecting secrets");
-
-    RepositorySecrets.run(ctx, &repository).await?;
+    for check in ctx.args.checks.clone().into_iter() {
+        check.run(ctx, &repository).await?;
+    }
 
     Ok(())
 }

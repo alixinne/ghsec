@@ -16,6 +16,7 @@ futures-util = "0.3.30"
 octocrab = { version = "0.32.0", features = ["stream"] }
 secure-string = "0.3.0"
 serde = { version = "1.0.193", features = ["derive"] }
+strum = { version = "0.25.0", features = ["derive"] }
 thiserror = "1.0.52"
 tokio = { version = "1.35.1", features = ["rt", "macros", "rt-multi-thread"] }
 tracing = "0.1.40"

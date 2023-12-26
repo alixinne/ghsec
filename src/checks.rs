@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 use enum_dispatch::enum_dispatch;
-use octocrab::{Octocrab, models::Repository};
+use octocrab::{models::Repository, Octocrab};
 
 mod default_worfklow_permissions;
 pub use default_worfklow_permissions::*;
@@ -29,6 +29,8 @@ pub trait Check {
 }
 
 #[enum_dispatch(Check)]
+#[derive(Debug, Clone, strum::EnumIter, strum::EnumString, strum::Display)]
+#[strum(serialize_all = "snake_case")]
 pub enum Checks {
     DefaultWorkflowPermissions,
     RepositorySecrets,
