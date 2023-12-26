@@ -37,7 +37,7 @@
 //! ```
 //!
 //! ## Supported checks
-//! 
+//!
 //! - [`default_workflow_permissions`](checks/default_worfklow_permissions/index.html): use secure
 //! defaults for "Default Workflow Permissions"
 //! - [`repository_secrets`](checks/repository_secrets/index.html): list repositories containing
@@ -49,7 +49,7 @@ use clap::Parser;
 use futures_util::{stream::FuturesUnordered, StreamExt, TryStreamExt};
 use octocrab::{models::Repository, Octocrab};
 use tokio::pin;
-use tracing::{info, level_filters::LevelFilter, debug};
+use tracing::{debug, info, level_filters::LevelFilter};
 use tracing_subscriber::{filter::Directive, EnvFilter};
 
 mod args;
