@@ -32,6 +32,14 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
 
+      - name: Run cargo-binstall
+        uses: cargo-bins/cargo-binstall@main
+
+      - name: Install tools
+        shell: bash
+        run: |
+          cargo binstall --no-confirm cargo-readme@3.3.1
+
       - name: Run clippy
         if: '!inputs.release'
         shell: bash

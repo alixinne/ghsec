@@ -6,7 +6,9 @@ generate_mono_repository_global_tag = true
 branch_whitelist = []
 skip_ci = "[skip ci]"
 skip_untracked = false
-pre_bump_hooks = []
+pre_bump_hooks = [
+  "cargo readme -o README.md",
+]
 post_bump_hooks = [
   "git push",
   "git push origin {{version_tag}}",
