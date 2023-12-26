@@ -1,5 +1,3 @@
-//! # ghsec
-//!
 //! [![main](https://github.com/vtavernier/ghsec/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/vtavernier/ghsec/actions/workflows/main.yml)
 //!
 //! ghsec is an opinionated linter (with fixes) for public GitHub repository security. It helps
