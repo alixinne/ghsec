@@ -63,3 +63,54 @@ jobs:
           release: ${{ inputs.release }}
           git-user: 'Cocogitto'
           git-user-email: 'no-reply@vtavernier.github.io'
+
+      - name: Build docs
+        if: inputs.release
+        shell: bash
+        run: cargo doc --no-deps
+
+      - name: Upload artifact
+        if: inputs.release
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages
+          path: target/doc
+
+  publish:
+    runs-on: ubuntu-22.04
+
+    needs: build
+
+    if: inputs.release && github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pages
+          path: doc
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: doc
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

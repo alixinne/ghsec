@@ -14,3 +14,6 @@ jobs:
       release: true
     permissions:
       contents: write
+      actions: read
+      pages: write
+      id-token: write
