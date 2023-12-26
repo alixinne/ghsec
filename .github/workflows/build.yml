@@ -1,0 +1,54 @@
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      release:
+        type: boolean
+        required: true
+        description: Set this to true to release the repository
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+          fetch-tags: true
+
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/            
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Run clippy
+        if: '!inputs.release'
+        shell: bash
+        run: cargo clippy -- -D warnings
+
+      - name: Run cargo fmt
+        if: '!inputs.release'
+        shell: bash
+        run: cargo fmt --check
+
+      - name: Build the binary
+        shell: bash
+        run: cargo build --release
+
+      - name: Semver release
+        uses: vtavernier/cocogitto-action@patch-1
+        with:
+          release: ${{ inputs.release }}
+          git-user: 'Cocogitto'
+          git-user-email: 'no-reply@vtavernier.github.io'

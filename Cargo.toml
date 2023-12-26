@@ -1,0 +1,27 @@
+[package]
+name = "ghsec"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.76"
+chrono = { version = "0.4.31", features = ["serde"] }
+clap = { version = "4.4.11", features = ["derive", "env"] }
+dotenv = "0.15.0"
+futures-util = "0.3.30"
+octocrab = { version = "0.32.0", features = ["stream"] }
+secure-string = "0.3.0"
+serde = { version = "1.0.193", features = ["derive"] }
+thiserror = "1.0.52"
+tokio = { version = "1.35.1", features = ["rt", "macros", "rt-multi-thread"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["fmt", "env-filter"] }
+url = "2.5.0"
+
+[profile.release]
+opt-level = 's'
+strip = true
+lto = "fat"
+panic = "abort"

@@ -1,0 +1,16 @@
+name: main
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      release: true
+    permissions:
+      contents: write
