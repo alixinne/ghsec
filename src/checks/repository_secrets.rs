@@ -1,3 +1,16 @@
+//! The `repository_secrets` lists secrets that are defined in a repository.
+//!
+//! Currently, this check only lists secret names found in the repository being analyzed. Since
+//! secrets often represent credentials (passwords, tokens, etc.) and are a high-value target, it
+//! makes sense to know if a repository contains secrets.
+//!
+//! When running with `--fix`, this check currently does not do anything.
+//!
+//! # Sources
+//!
+//! - [GitHub Docs](https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28#list-repository-secrets)
+//! - [GitHub REST API](https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28#list-repository-secrets)
+
 use anyhow::anyhow;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
@@ -20,6 +33,7 @@ struct Secret {
     updated_at: DateTime<Utc>,
 }
 
+/// Implementation for the `repository_secrets` check
 #[derive(Default, Debug, Clone, Copy)]
 pub struct RepositorySecrets;
 

@@ -1,3 +1,5 @@
+//! Implementation for security checks on repositories
+
 use async_trait::async_trait;
 use enum_dispatch::enum_dispatch;
 use octocrab::{models::Repository, Octocrab};
@@ -10,9 +12,11 @@ pub use repository_secrets::*;
 
 use crate::Args;
 
-// Context for running a check against GitHub
+/// Context for running a check against GitHub
 pub struct CheckCtx<'c> {
+    /// Arguments to the CLI
     pub args: &'c Args,
+    /// GitHub API client
     pub gh: &'c Octocrab,
 }
 
@@ -22,12 +26,14 @@ impl<'c> CheckCtx<'c> {
     }
 }
 
+/// Represents the possible operations for a check
 #[async_trait]
 #[enum_dispatch]
 pub trait Check {
     async fn run<'c>(&self, ctx: &'c CheckCtx<'c>, repository: &Repository) -> anyhow::Result<()>;
 }
 
+/// Represents all the available checks
 #[enum_dispatch(Check)]
 #[derive(Debug, Clone, strum::EnumIter, strum::EnumString, strum::Display)]
 #[strum(serialize_all = "snake_case")]
