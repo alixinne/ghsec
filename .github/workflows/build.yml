@@ -39,6 +39,7 @@ jobs:
         shell: bash
         run: |
           cargo binstall --no-confirm cargo-readme@3.3.1
+          cargo binstall --no-confirm cargo-edit@0.12.2
 
       - name: Run clippy
         if: '!inputs.release'

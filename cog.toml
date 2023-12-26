@@ -7,6 +7,7 @@ branch_whitelist = []
 skip_ci = "[skip ci]"
 skip_untracked = false
 pre_bump_hooks = [
+  "cargo set-version {{version}}",
   "cargo readme -o README.md",
 ]
 post_bump_hooks = [
