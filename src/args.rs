@@ -91,4 +91,8 @@ pub struct Args {
     /// Enable debug logs
     #[arg(short = 'D', long)]
     pub debug: bool,
+
+    /// Target repositories to run checks on. Supports globs.
+    #[arg(default_value = "*")]
+    pub repository_names: glob::Pattern,
 }

@@ -32,6 +32,9 @@
 //!
 //! # Run the checks and fix the issues, if possible
 //! ghsec --fix
+//!
+//! # You can also specify repositories to check using a unix-style glob
+//! ghsec 'workflows-*'
 //! ```
 //!
 //! ## Supported checks
@@ -113,7 +116,11 @@ async fn main() -> anyhow::Result<()> {
     // Build a FuturesUnordered
     let mut tasks = FuturesUnordered::new();
     while let Some(target_repo) = repos.try_next().await? {
-        tasks.push(process_repo(&ctx, target_repo));
+        if args.repository_names.matches(&target_repo.name) {
+            tasks.push(process_repo(&ctx, target_repo));
+        } else {
+            debug!(repository = %target_repo.name, "skipping repository not matching input pattern");
+        }
     }
 
     // Poll it
