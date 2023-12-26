@@ -14,6 +14,12 @@
 //! cargo install --git https://github.com/vtavernier/ghsec.git
 //! ```
 //!
+//! ### With [cargo-binstall](https://github.com/cargo-bins/cargo-binstall)
+//!
+//! ```bash
+//! cargo binstall --git https://github.com/vtavernier/ghsec.git ghsec
+//! ```
+//!
 //! ## Usage
 //!
 //! You will need a personal access token with admin access level to your repositories. Currently,
