@@ -424,6 +424,7 @@ dependencies = [
  "futures-util",
  "glob",
  "octocrab",
+ "regex",
  "secure-string",
  "serde",
  "strum",

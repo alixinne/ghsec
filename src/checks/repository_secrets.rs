@@ -4,6 +4,10 @@
 //! secrets often represent credentials (passwords, tokens, etc.) and are a high-value target, it
 //! makes sense to know if a repository contains secrets.
 //!
+//! If a secret name matches the `--repository-secrets-warn-secret-names` regular expression, the
+//! secret will be printed as a warning instead of an information message. This allows filtering
+//! more critical secrets from less critical ones.
+//!
 //! When running with `--fix`, this check currently does not do anything.
 //!
 //! # Sources
@@ -16,7 +20,7 @@ use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use octocrab::models::Repository;
 use serde::{Deserialize, Serialize};
-use tracing::info;
+use tracing::{info, warn};
 
 use super::{Check, CheckCtx};
 
@@ -58,7 +62,15 @@ impl Check for RepositorySecrets {
             .await?;
 
         for secret in &secrets.secrets {
-            info!(secret_name = secret.name, "found secret");
+            if ctx
+                .args
+                .repository_secrets_warn_secret_names
+                .is_match(&secret.name)
+            {
+                warn!(secret_name = secret.name, "found secret");
+            } else {
+                info!(secret_name = secret.name, "found secret");
+            }
         }
 
         if !secrets.secrets.is_empty() && ctx.args.fix {

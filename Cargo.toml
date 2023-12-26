@@ -16,6 +16,7 @@ enum_dispatch = "0.3.12"
 futures-util = "0.3.30"
 glob = "0.3.1"
 octocrab = { version = "0.32.0", features = ["stream"] }
+regex = "1.10.2"
 secure-string = "0.3.0"
 serde = { version = "1.0.193", features = ["derive"] }
 strum = { version = "0.25.0", features = ["derive"] }

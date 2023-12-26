@@ -95,4 +95,8 @@ pub struct Args {
     /// Target repositories to run checks on. Supports globs.
     #[arg(default_value = "*")]
     pub repository_names: glob::Pattern,
+
+    /// Which secrets should trigger warnings instead of regular info
+    #[arg(long, default_value = "^GH_(TOKEN|PAT)$")]
+    pub repository_secrets_warn_secret_names: regex::Regex,
 }
