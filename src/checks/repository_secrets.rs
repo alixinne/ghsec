@@ -43,8 +43,12 @@ impl Check for RepositorySecrets {
             )
             .await?;
 
-        for secret in secrets.secrets {
+        for secret in &secrets.secrets {
             info!(secret_name = secret.name, "found secret");
+        }
+
+        if !secrets.secrets.is_empty() && ctx.args.fix {
+            info!("nothing to fix regarding secrets yet");
         }
 
         Ok(())

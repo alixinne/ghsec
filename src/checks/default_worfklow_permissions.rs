@@ -2,7 +2,7 @@ use anyhow::anyhow;
 use async_trait::async_trait;
 use octocrab::models::Repository;
 use serde::{Deserialize, Serialize};
-use tracing::warn;
+use tracing::{warn, info};
 
 use super::{Check, CheckCtx};
 
@@ -28,11 +28,14 @@ impl Check for DefaultWorkflowPermissions {
                 .ok_or_else(|| anyhow!("missing full_name"))?
         );
 
+        let mut fix_needed = false;
+
         let permissions: DefaultRepositoryWorkflowPermissions =
             ctx.gh.get(&route, Option::<()>::None.as_ref()).await?;
 
         if permissions.can_approve_pull_request_reviews {
             warn!("can_approve_pull_request_reviews is set to true");
+            fix_needed = true;
         }
 
         if permissions.default_workflow_permissions != "read" {
@@ -40,9 +43,12 @@ impl Check for DefaultWorkflowPermissions {
                 "default_workflow_permissions is set to {}",
                 permissions.default_workflow_permissions
             );
+            fix_needed = true;
         }
 
-        if ctx.args.fix {
+        if ctx.args.fix && fix_needed {
+            info!("fixing default workflow permissions");
+
             ctx.gh
                 .put(
                     route,
