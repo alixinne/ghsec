@@ -2,6 +2,30 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.2.0](https://github.com/vtavernier/ghsec/compare/v0.1.0..v0.2.0) - 2023-12-26
+#### Bug Fixes
+- update logging and fix behavior - ([7ca9e04](https://github.com/vtavernier/ghsec/commit/7ca9e041505ff1a78917ecd488031647dad5b24c)) - [@vtavernier](https://github.com/vtavernier)
+#### Build system
+- set version in Cargo.toml on release - ([e581820](https://github.com/vtavernier/ghsec/commit/e581820b78a6201ac7064f0555fa5d7b18c8a734)) - [@vtavernier](https://github.com/vtavernier)
+- generate readme on release - ([aafd22c](https://github.com/vtavernier/ghsec/commit/aafd22cb4830ca9c86b9892280aa4a0d90b75e4d)) - [@vtavernier](https://github.com/vtavernier)
+#### Continuous Integration
+- enable github pages build - ([f201c1b](https://github.com/vtavernier/ghsec/commit/f201c1b02df6378e8311a965aec2ce2b29a68bef)) - [@vtavernier](https://github.com/vtavernier)
+- add GITHUB_TOKEN to environment - ([0b736c4](https://github.com/vtavernier/ghsec/commit/0b736c40eedaaca8b5b100c2dacd8709113db645)) - [@vtavernier](https://github.com/vtavernier)
+#### Documentation
+- add main module documentation - ([c89ae3c](https://github.com/vtavernier/ghsec/commit/c89ae3cb91bf8638b1868c0e0a83c4cc3193af0f)) - [@vtavernier](https://github.com/vtavernier)
+#### Features
+- support cargo-binstall - ([14a6169](https://github.com/vtavernier/ghsec/commit/14a6169622afffad0ee7d54a3c0ed6be3e48e104)) - [@vtavernier](https://github.com/vtavernier)
+- add json and debug logging options - ([ac90704](https://github.com/vtavernier/ghsec/commit/ac907040c75b16719b92e27326ac44ebe6a7b31a)) - [@vtavernier](https://github.com/vtavernier)
+- allow configuring checks to run - ([045b193](https://github.com/vtavernier/ghsec/commit/045b193f4bb1f056f0f5b3e6231461b4452e51c2)) - [@vtavernier](https://github.com/vtavernier)
+#### Miscellaneous Chores
+- **(gitignore)** ignore built binaries - ([0798581](https://github.com/vtavernier/ghsec/commit/07985815a8ca6c85129559eb85a72b3e7e3036cd)) - [@vtavernier](https://github.com/vtavernier)
+- run cargo fmt - ([5c3d4de](https://github.com/vtavernier/ghsec/commit/5c3d4de207273d33b06b778c6b84f799e7c0610d)) - [@vtavernier](https://github.com/vtavernier)
+- set repository metadata - ([ced47d0](https://github.com/vtavernier/ghsec/commit/ced47d0bfafbcd5279187b5289eca7c36c035927)) - [@vtavernier](https://github.com/vtavernier)
+#### Refactoring
+- move checks to dedicated enum variants - ([afdc9e2](https://github.com/vtavernier/ghsec/commit/afdc9e24fae84a87dcd511c31f9bd8c0ad0de199)) - [@vtavernier](https://github.com/vtavernier)
+
+- - -
+
 ## [v0.1.0](https://github.com/vtavernier/ghsec/compare/a5ebcac1e753e61f29505b1b33e63c7e14a74eb3..v0.1.0) - 2023-12-26
 #### Features
 - initial release - ([a1b99fb](https://github.com/vtavernier/ghsec/commit/a1b99fb254f376545f80a045c8826f7efcb0de5b)) - [@vtavernier](https://github.com/vtavernier)
