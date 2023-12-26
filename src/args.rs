@@ -83,4 +83,12 @@ pub struct Args {
     /// Which checks to run
     #[arg(short = 'C', long, default_value = "all")]
     pub checks: CheckRunRequest,
+
+    /// Output logs as JSON
+    #[arg(long)]
+    pub json: bool,
+
+    /// Enable debug logs
+    #[arg(short = 'D', long)]
+    pub debug: bool,
 }

@@ -1,9 +1,11 @@
+use std::str::FromStr;
+
 use clap::Parser;
 use futures_util::{stream::FuturesUnordered, StreamExt, TryStreamExt};
 use octocrab::{models::Repository, Octocrab};
 use tokio::pin;
-use tracing::{info, level_filters::LevelFilter};
-use tracing_subscriber::EnvFilter;
+use tracing::{info, level_filters::LevelFilter, debug};
+use tracing_subscriber::{filter::Directive, EnvFilter};
 
 mod args;
 use args::Args;
@@ -14,6 +16,7 @@ use checks::{Check, CheckCtx};
 #[tracing::instrument(name="repository", level="info", skip_all, fields(repository = repository.full_name.as_ref().unwrap()))]
 async fn process_repo<'c>(ctx: &'c CheckCtx<'c>, repository: Repository) -> anyhow::Result<()> {
     for check in ctx.args.checks.clone().into_iter() {
+        debug!(check = %check, "running check");
         check.run(ctx, &repository).await?;
     }
 
@@ -28,13 +31,20 @@ async fn main() -> anyhow::Result<()> {
     // Load arguments
     let args = Args::parse();
 
-    tracing_subscriber::fmt()
-        .with_env_filter(
-            EnvFilter::builder()
-                .with_default_directive(LevelFilter::INFO.into())
-                .from_env_lossy(),
-        )
-        .init();
+    let filter = EnvFilter::builder()
+        .with_default_directive(if args.debug {
+            Directive::from_str("ghsec=debug").unwrap()
+        } else {
+            LevelFilter::INFO.into()
+        })
+        .from_env_lossy();
+
+    let fmt = tracing_subscriber::fmt().with_env_filter(filter);
+    if args.json {
+        fmt.json().init()
+    } else {
+        fmt.compact().init();
+    };
 
     // Create client
     let gh = Octocrab::builder()
