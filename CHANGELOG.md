@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.0](https://github.com/vtavernier/ghsec/compare/v0.3.0..v0.4.0) - 2023-12-27
+#### Continuous Integration
+- use cog changelog in releases instead of --generate-notes - ([bb4225a](https://github.com/vtavernier/ghsec/commit/bb4225a6c655673d9e8fdb0baabe52f002605df1)) - [@vtavernier](https://github.com/vtavernier)
+#### Documentation
+- **(code_review_limits)** fix typo - ([f1d5e8a](https://github.com/vtavernier/ghsec/commit/f1d5e8af40c61021f8dc1721646f59682d767aef)) - [@vtavernier](https://github.com/vtavernier)
+- fix list in readme - ([9addb63](https://github.com/vtavernier/ghsec/commit/9addb634cabc2cfd92d246bd29cf8f89aa33690d)) - [@vtavernier](https://github.com/vtavernier)
+#### Features
+- add fork_pull_request_workflow check - ([cf98b35](https://github.com/vtavernier/ghsec/commit/cf98b35491bbb90572a63f9235d7c2ae456cfcae)) - [@vtavernier](https://github.com/vtavernier)
+
+- - -
+
 ## [v0.3.0](https://github.com/vtavernier/ghsec/compare/v0.2.0..v0.3.0) - 2023-12-27
 #### Documentation
 - **(checks)** add documentation for current checks - ([bcc10f7](https://github.com/vtavernier/ghsec/commit/bcc10f7fa5b6aaaad8cc0a4dfe70b437a7f03b33)) - [@vtavernier](https://github.com/vtavernier)
