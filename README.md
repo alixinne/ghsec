@@ -11,13 +11,13 @@ usually too open by default.
 #### From source
 
 ```bash
-cargo install --git https://github.com/vtavernier/ghsec.git
+cargo install --force --locked ghsec
 ```
 
 #### With [cargo-binstall](https://github.com/cargo-bins/cargo-binstall)
 
 ```bash
-cargo binstall --git https://github.com/vtavernier/ghsec.git ghsec
+cargo binstall ghsec
 ```
 
 ### Usage
@@ -41,6 +41,8 @@ ghsec 'workflows-*'
 
 ### Supported checks
 
+- [`branch_protections`](https://vtavernier.github.io/ghsec/ghsec/checks/branch_protections/index.html):
+check branch protection settings
 - [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
 check account settings for code review limits
 - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):

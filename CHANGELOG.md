@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.5.0](https://github.com/vtavernier/ghsec/compare/v0.4.0..v0.5.0) - 2023-12-27
+#### Bug Fixes
+- expose clickable links as tracing fields - ([18678f1](https://github.com/vtavernier/ghsec/commit/18678f191cd3d8118123b192677704323a958b5b)) - [@vtavernier](https://github.com/vtavernier)
+#### Continuous Integration
+- publish to crates.io - ([56cfc7b](https://github.com/vtavernier/ghsec/commit/56cfc7bd37f4f66f1d883c7e45961cbc5063240b)) - [@vtavernier](https://github.com/vtavernier)
+#### Features
+- implement basic branch_protections check - ([ed8ac90](https://github.com/vtavernier/ghsec/commit/ed8ac908ad89b6550539353ec270e83fa54b38a5)) - [@vtavernier](https://github.com/vtavernier)
+
+- - -
+
 ## [v0.4.0](https://github.com/vtavernier/ghsec/compare/v0.3.0..v0.4.0) - 2023-12-27
 #### Continuous Integration
 - use cog changelog in releases instead of --generate-notes - ([bb4225a](https://github.com/vtavernier/ghsec/commit/bb4225a6c655673d9e8fdb0baabe52f002605df1)) - [@vtavernier](https://github.com/vtavernier)
