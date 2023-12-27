@@ -1,6 +1,4 @@
-# ghsec
-
-## ghsec
+# [ghsec](https://github.com/vtavernier/ghsec)
 
 [![main](https://github.com/vtavernier/ghsec/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/vtavernier/ghsec/actions/workflows/main.yml)
 
@@ -36,11 +34,20 @@ ghsec
 
 # Run the checks and fix the issues, if possible
 ghsec --fix
+
+# You can also specify repositories to check using a unix-style glob
+ghsec 'workflows-*'
 ```
 
 ### Supported checks
 
-- [`default_workflow_permissions`](checks/default_worfklow_permissions/index.html): use secure
-defaults for "Default Workflow Permissions"
-- [`repository_secrets`](checks/repository_secrets/index.html): list repositories containing
-GitHub Actions secrets
+- [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
+check account settings for code review limits -
+[`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
+use secure defaults for "Default Workflow Permissions"
+- [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
+list repositories containing GitHub Actions secrets
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

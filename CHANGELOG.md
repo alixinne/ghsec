@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.3.0](https://github.com/vtavernier/ghsec/compare/v0.2.0..v0.3.0) - 2023-12-27
+#### Documentation
+- **(checks)** add documentation for current checks - ([bcc10f7](https://github.com/vtavernier/ghsec/commit/bcc10f7fa5b6aaaad8cc0a4dfe70b437a7f03b33)) - [@vtavernier](https://github.com/vtavernier)
+- fix links to supported checks - ([1cb20d1](https://github.com/vtavernier/ghsec/commit/1cb20d1742204e32b3dfda8823188671329e014e)) - [@vtavernier](https://github.com/vtavernier)
+- add LICENSE - ([4eab024](https://github.com/vtavernier/ghsec/commit/4eab024c9fa9f7607ab342f3af3dcc4c5899b3a9)) - [@vtavernier](https://github.com/vtavernier)
+#### Features
+- **(repository_secrets)** add secret name regex for triggering warnings - ([f199330](https://github.com/vtavernier/ghsec/commit/f1993301d26a606238d6482ebb4c6d8df69869bd)) - [@vtavernier](https://github.com/vtavernier)
+- add code_review_limits check - ([d20ffc3](https://github.com/vtavernier/ghsec/commit/d20ffc3d0865e9336549d881d38b513428a33743)) - [@vtavernier](https://github.com/vtavernier)
+- filter target repositories using glob - ([33192c7](https://github.com/vtavernier/ghsec/commit/33192c75f195c70ab76419c57468d29046410dbc)) - [@vtavernier](https://github.com/vtavernier)
+
+- - -
+
 ## [v0.2.0](https://github.com/vtavernier/ghsec/compare/v0.1.0..v0.2.0) - 2023-12-26
 #### Bug Fixes
 - update logging and fix behavior - ([7ca9e04](https://github.com/vtavernier/ghsec/commit/7ca9e041505ff1a78917ecd488031647dad5b24c)) - [@vtavernier](https://github.com/vtavernier)
