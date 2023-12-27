@@ -14,7 +14,8 @@ post_bump_hooks = [
   "git push",
   "git push origin {{version_tag}}",
   "cp target/release/ghsec ghsec-x86_64-unknonwn-linux-gnu",
-  "gh release create {{version_tag}} --generate-notes ghsec-x86_64-unknonwn-linux-gnu"
+  "cog changelog --at {{version_tag}} -t remote > GITHUB_CHANGELOG.md",
+  "gh release create {{version_tag}} -F GITHUB_CHANGELOG.md ghsec-x86_64-unknonwn-linux-gnu"
 ]
 pre_package_bump_hooks = []
 post_package_bump_hooks = []
