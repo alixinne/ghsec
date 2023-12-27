@@ -40,8 +40,8 @@
 //! ## Supported checks
 //!
 //! - [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
-//! check account settings for code review limits -
-//! [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
+//! check account settings for code review limits
+//! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
 //! use secure defaults for "Default Workflow Permissions"
 //! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
 //! list repositories containing GitHub Actions secrets
