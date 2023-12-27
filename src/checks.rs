@@ -10,6 +10,9 @@ pub use code_review_limits::*;
 mod default_worfklow_permissions;
 pub use default_worfklow_permissions::*;
 
+mod fork_pull_request_workflows;
+pub use fork_pull_request_workflows::*;
+
 mod repository_secrets;
 pub use repository_secrets::*;
 
@@ -49,6 +52,7 @@ pub trait AccountCheck {
 #[strum(serialize_all = "snake_case")]
 pub enum RepositoryChecks {
     DefaultWorkflowPermissions,
+    ForkPullRequestWorkflows,
     RepositorySecrets,
 }
 

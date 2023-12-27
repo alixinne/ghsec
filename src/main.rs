@@ -43,6 +43,8 @@
 //! check account settings for code review limits
 //! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
 //! use secure defaults for "Default Workflow Permissions"
+//! - [`fork_pull_request_workflows`](https://vtavernier.github.io/ghsec/ghsec/checks/fork_pull_request_workflows/index.html):
+//! check repository settings for public fork pull request workflow runs
 //! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
 //! list repositories containing GitHub Actions secrets
 
