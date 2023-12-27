@@ -427,6 +427,7 @@ dependencies = [
  "regex",
  "secure-string",
  "serde",
+ "serde_json",
  "strum",
  "thiserror",
  "tokio",

@@ -4,6 +4,9 @@ use async_trait::async_trait;
 use enum_dispatch::enum_dispatch;
 use octocrab::{models::Repository, Octocrab};
 
+mod branch_protections;
+pub use branch_protections::*;
+
 mod code_review_limits;
 pub use code_review_limits::*;
 
@@ -51,6 +54,7 @@ pub trait AccountCheck {
 #[derive(Debug, Clone, strum::EnumIter, strum::EnumString, strum::Display)]
 #[strum(serialize_all = "snake_case")]
 pub enum RepositoryChecks {
+    BranchProtections,
     DefaultWorkflowPermissions,
     ForkPullRequestWorkflows,
     RepositorySecrets,

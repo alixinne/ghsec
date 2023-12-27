@@ -39,6 +39,8 @@
 //!
 //! ## Supported checks
 //!
+//! - [`branch_protections`](https://vtavernier.github.io/ghsec/ghsec/checks/branch_protections/index.html):
+//! check branch protection settings
 //! - [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
 //! check account settings for code review limits
 //! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
@@ -54,7 +56,7 @@ use clap::Parser;
 use futures_util::{stream::FuturesUnordered, StreamExt, TryStreamExt};
 use octocrab::{models::Repository, Octocrab};
 use tokio::pin;
-use tracing::{debug, info, level_filters::LevelFilter};
+use tracing::{debug, error, info, level_filters::LevelFilter};
 use tracing_subscriber::{filter::Directive, EnvFilter};
 
 mod args;
@@ -143,7 +145,11 @@ async fn main() -> anyhow::Result<()> {
         }
 
         // Poll it
-        while tasks.next().await.is_some() {}
+        while let Some(result) = tasks.next().await {
+            if let Err(err) = result {
+                error!(?err, "error running check");
+            }
+        }
     }
 
     // Finish with account-level tasks
