@@ -7,6 +7,10 @@ on:
         type: boolean
         required: true
         description: Set this to true to release the repository
+    secrets:
+      CARGO_REGISTRY_TOKEN:
+        description: crates.io API token
+        required: false
 
 jobs:
   build:
