@@ -1,15 +1,27 @@
 use std::str::FromStr;
 
+use anyhow::bail;
 use clap::Parser;
 use secure_string::SecureString;
 use strum::IntoEnumIterator;
 
-use crate::checks::Checks;
+use crate::checks::{AccountChecks, Checks, RepositoryChecks};
 
 #[derive(Debug, Clone)]
 pub enum CheckRunRequest {
     All,
     Specific(Vec<Checks>),
+}
+
+impl CheckRunRequest {
+    pub fn has_repository_checks(&self) -> bool {
+        match self {
+            CheckRunRequest::All => true,
+            CheckRunRequest::Specific(checks) => checks
+                .iter()
+                .any(|check| matches!(check, Checks::Repository(_))),
+        }
+    }
 }
 
 impl Default for CheckRunRequest {
@@ -19,7 +31,7 @@ impl Default for CheckRunRequest {
 }
 
 impl FromStr for CheckRunRequest {
-    type Err = <Checks as FromStr>::Err;
+    type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut results = vec![];
@@ -32,40 +44,33 @@ impl FromStr for CheckRunRequest {
                 return Ok(Self::All);
             }
 
-            results.push(Checks::from_str(&without_whitespace)?);
+            if let Ok(check) = AccountChecks::from_str(&without_whitespace) {
+                results.push(check.into());
+            } else if let Ok(check) = RepositoryChecks::from_str(&without_whitespace) {
+                results.push(check.into());
+            } else {
+                bail!("unknown check type")
+            }
         }
 
         Ok(Self::Specific(results))
     }
 }
 
-pub enum CheckRunRequestIterator {
-    All(<Checks as strum::IntoEnumIterator>::Iterator),
-    Specific(<Vec<Checks> as IntoIterator>::IntoIter),
-}
-
-impl Iterator for CheckRunRequestIterator {
-    type Item = Checks;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        match self {
-            CheckRunRequestIterator::All(ref mut inner) => inner.next(),
-            CheckRunRequestIterator::Specific(ref mut inner) => inner.next(),
-        }
-    }
-}
-
 impl IntoIterator for CheckRunRequest {
     type Item = Checks;
 
-    type IntoIter = CheckRunRequestIterator;
+    type IntoIter = <Vec<Checks> as IntoIterator>::IntoIter;
 
     fn into_iter(self) -> Self::IntoIter {
         match self {
-            CheckRunRequest::All => <Self as IntoIterator>::IntoIter::All(Checks::iter()),
-            CheckRunRequest::Specific(selected) => {
-                <Self as IntoIterator>::IntoIter::Specific(selected.into_iter())
+            CheckRunRequest::All => {
+                let mut result = vec![];
+                result.extend(RepositoryChecks::iter().map(Into::into));
+                result.extend(AccountChecks::iter().map(Into::into));
+                result.into_iter()
             }
+            CheckRunRequest::Specific(selected) => selected.into_iter(),
         }
     }
 }

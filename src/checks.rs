@@ -4,6 +4,9 @@ use async_trait::async_trait;
 use enum_dispatch::enum_dispatch;
 use octocrab::{models::Repository, Octocrab};
 
+mod code_review_limits;
+pub use code_review_limits::*;
+
 mod default_worfklow_permissions;
 pub use default_worfklow_permissions::*;
 
@@ -26,18 +29,52 @@ impl<'c> CheckCtx<'c> {
     }
 }
 
-/// Represents the possible operations for a check
+/// Represents the possible operations for a repository check
 #[async_trait]
 #[enum_dispatch]
-pub trait Check {
+pub trait RepositoryCheck {
     async fn run<'c>(&self, ctx: &'c CheckCtx<'c>, repository: &Repository) -> anyhow::Result<()>;
 }
 
-/// Represents all the available checks
-#[enum_dispatch(Check)]
+/// Represents the possible operations for an account check
+#[async_trait]
+#[enum_dispatch]
+pub trait AccountCheck {
+    async fn run<'c>(&self, ctx: &'c CheckCtx<'c>) -> anyhow::Result<()>;
+}
+
+/// Represents all the available checks on a repository
+#[enum_dispatch(RepositoryCheck)]
 #[derive(Debug, Clone, strum::EnumIter, strum::EnumString, strum::Display)]
 #[strum(serialize_all = "snake_case")]
-pub enum Checks {
+pub enum RepositoryChecks {
     DefaultWorkflowPermissions,
     RepositorySecrets,
+}
+
+/// Represents all the available checks on an account
+#[enum_dispatch(AccountCheck)]
+#[derive(Debug, Clone, strum::EnumIter, strum::EnumString, strum::Display)]
+#[strum(serialize_all = "snake_case")]
+pub enum AccountChecks {
+    CodeReviewLimits,
+}
+
+/// Represents all the available checks
+#[derive(Debug, Clone)]
+pub enum Checks {
+    Repository(RepositoryChecks),
+    Account(AccountChecks),
+}
+
+impl From<RepositoryChecks> for Checks {
+    fn from(value: RepositoryChecks) -> Self {
+        Self::Repository(value)
+    }
+}
+
+impl From<AccountChecks> for Checks {
+    fn from(value: AccountChecks) -> Self {
+        Self::Account(value)
+    }
 }

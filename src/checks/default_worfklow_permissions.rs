@@ -31,7 +31,7 @@ use octocrab::models::Repository;
 use serde::{Deserialize, Serialize};
 use tracing::{info, warn};
 
-use super::{Check, CheckCtx};
+use super::{CheckCtx, RepositoryCheck};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct DefaultRepositoryWorkflowPermissions {
@@ -45,7 +45,7 @@ struct DefaultRepositoryWorkflowPermissions {
 pub struct DefaultWorkflowPermissions;
 
 #[async_trait]
-impl Check for DefaultWorkflowPermissions {
+impl RepositoryCheck for DefaultWorkflowPermissions {
     #[tracing::instrument(name = "default_workflow_permissions", level = "info", skip_all)]
     async fn run<'c>(&self, ctx: &'c CheckCtx<'c>, repository: &Repository) -> anyhow::Result<()> {
         let route = format!(

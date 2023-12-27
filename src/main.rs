@@ -39,10 +39,12 @@
 //!
 //! ## Supported checks
 //!
-//! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html): use secure
-//! defaults for "Default Workflow Permissions"
-//! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html): list repositories containing
-//! GitHub Actions secrets
+//! - [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
+//! check account settings for code review limits -
+//! [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
+//! use secure defaults for "Default Workflow Permissions"
+//! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
+//! list repositories containing GitHub Actions secrets
 
 use std::str::FromStr;
 
@@ -57,13 +59,27 @@ mod args;
 use args::Args;
 
 pub mod checks;
-use checks::{Check, CheckCtx};
+use checks::{AccountCheck, CheckCtx, Checks, RepositoryCheck};
 
 #[tracing::instrument(name="repository", level="info", skip_all, fields(repository = repository.full_name.as_ref().unwrap()))]
 async fn process_repo<'c>(ctx: &'c CheckCtx<'c>, repository: Repository) -> anyhow::Result<()> {
     for check in ctx.args.checks.clone().into_iter() {
-        debug!(check = %check, "running check");
-        check.run(ctx, &repository).await?;
+        if let Checks::Repository(check) = check {
+            debug!(check = %check, "running check");
+            check.run(ctx, &repository).await?;
+        }
+    }
+
+    Ok(())
+}
+
+#[tracing::instrument(name = "account", level = "info", skip_all)]
+async fn process_account<'c>(ctx: &'c CheckCtx<'c>) -> anyhow::Result<()> {
+    for check in ctx.args.checks.clone().into_iter() {
+        if let Checks::Account(check) = check {
+            debug!(check = %check, "running check");
+            check.run(ctx).await?;
+        }
     }
 
     Ok(())
@@ -101,30 +117,33 @@ async fn main() -> anyhow::Result<()> {
     let current_user = gh.current();
     info!("Logged in as {}", current_user.user().await?.login);
 
-    // Get target repositories
-    let repos = current_user
-        .list_repos_for_authenticated_user()
-        .type_("owner")
-        .send()
-        .await?
-        .into_stream(&gh);
-    pin!(repos);
-
     // Context for running checks
     let ctx = CheckCtx::new(&args, &gh);
 
-    // Build a FuturesUnordered
-    let mut tasks = FuturesUnordered::new();
-    while let Some(target_repo) = repos.try_next().await? {
-        if args.repository_names.matches(&target_repo.name) {
-            tasks.push(process_repo(&ctx, target_repo));
-        } else {
-            debug!(repository = %target_repo.name, "skipping repository not matching input pattern");
+    if args.checks.has_repository_checks() {
+        // Get target repositories
+        let repos = current_user
+            .list_repos_for_authenticated_user()
+            .type_("owner")
+            .send()
+            .await?
+            .into_stream(&gh);
+        pin!(repos);
+
+        // Build a FuturesUnordered
+        let mut tasks = FuturesUnordered::new();
+        while let Some(target_repo) = repos.try_next().await? {
+            if args.repository_names.matches(&target_repo.name) {
+                tasks.push(process_repo(&ctx, target_repo));
+            } else {
+                debug!(repository = %target_repo.name, "skipping repository not matching input pattern");
+            }
         }
+
+        // Poll it
+        while tasks.next().await.is_some() {}
     }
 
-    // Poll it
-    while tasks.next().await.is_some() {}
-
-    Ok(())
+    // Finish with account-level tasks
+    process_account(&ctx).await
 }

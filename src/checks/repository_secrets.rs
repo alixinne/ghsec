@@ -22,7 +22,7 @@ use octocrab::models::Repository;
 use serde::{Deserialize, Serialize};
 use tracing::{info, warn};
 
-use super::{Check, CheckCtx};
+use super::{CheckCtx, RepositoryCheck};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct SecretList {
@@ -42,7 +42,7 @@ struct Secret {
 pub struct RepositorySecrets;
 
 #[async_trait]
-impl Check for RepositorySecrets {
+impl RepositoryCheck for RepositorySecrets {
     #[tracing::instrument(name = "repository_secrets", level = "info", skip_all)]
     async fn run<'c>(&self, ctx: &'c CheckCtx<'c>, repository: &Repository) -> anyhow::Result<()> {
         let secrets: SecretList = ctx
