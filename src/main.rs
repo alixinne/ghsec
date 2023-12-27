@@ -9,13 +9,13 @@
 //! ### From source
 //!
 //! ```bash
-//! cargo install --git https://github.com/vtavernier/ghsec.git
+//! cargo install --force --locked ghsec
 //! ```
 //!
 //! ### With [cargo-binstall](https://github.com/cargo-bins/cargo-binstall)
 //!
 //! ```bash
-//! cargo binstall --git https://github.com/vtavernier/ghsec.git ghsec
+//! cargo binstall ghsec
 //! ```
 //!
 //! ## Usage

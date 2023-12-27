@@ -12,6 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-22.04
 
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,6 +59,7 @@ jobs:
         run: cargo build --release
 
       - name: Semver release
+        id: release
         uses: vtavernier/cocogitto-action@patch-1
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -69,12 +73,60 @@ jobs:
         shell: bash
         run: cargo doc --no-deps
 
-      - name: Upload artifact
+      - name: Upload pages artifact
         if: inputs.release
         uses: actions/upload-artifact@v4
         with:
           name: pages
           path: target/doc
+
+      - name: Upload workspace artifact
+        if: inputs.release
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace
+          path: |
+            .
+            !target
+
+  crates-io:
+    runs-on: ubuntu-22.04
+
+    needs: build
+
+    if: >
+      inputs.release &&
+      github.ref == 'refs/heads/master' &&
+      github.event_name == 'push' &&
+      needs.build.outputs.version
+
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+
+    permissions:
+      actions: read
+
+    environment:
+      name: crates-io
+
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace
+          path: .
+
+      - name: Run cargo login
+        shell: bash
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          cargo login "$CARGO_REGISTRY_TOKEN"
+
+      - name: Run cargo publish
+        shell: bash
+        run: cargo publish
 
   publish:
     runs-on: ubuntu-22.04
