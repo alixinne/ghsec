@@ -33,7 +33,14 @@ pub struct ForkPullRequestWorkflows;
 impl RepositoryCheck for ForkPullRequestWorkflows {
     #[tracing::instrument(name = "fork_pull_request_workflows", level = "info", skip_all)]
     async fn run<'c>(&self, _ctx: &'c CheckCtx<'c>, repository: &Repository) -> anyhow::Result<()> {
-        error!("ghsec cannot programatically check or change settings for 'Fork pull request workflows from outside collaborators'. Go to https://github.com/{}/settings/actions and make sure that the 'Require approval for first-time contributors' option is selected.", repository.full_name.as_ref().ok_or_else(|| anyhow!("missing repository full name"))?);
+        let link = format!(
+            "https://github.com/{}/settings/actions",
+            repository
+                .full_name
+                .as_ref()
+                .ok_or_else(|| anyhow!("missing repository full name"))?
+        );
+        error!(link, "ghsec cannot programatically check or change settings for 'Fork pull request workflows from outside collaborators'. Go to {link} and make sure that the 'Require approval for first-time contributors' option is selected.");
         Ok(())
     }
 }

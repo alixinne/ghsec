@@ -31,7 +31,8 @@ pub struct CodeReviewLimits;
 impl AccountCheck for CodeReviewLimits {
     #[tracing::instrument(name = "code_review_limits", level = "info", skip_all)]
     async fn run<'c>(&self, _ctx: &'c CheckCtx<'c>) -> anyhow::Result<()> {
-        error!("ghsec cannot programatically check or change settings for Code Review Limits. Go to https://github.com/settings/code_review_limits and make sure that the option is enabled.");
+        let link = "https://github.com/settings/code_review_limits";
+        error!(link, "ghsec cannot programatically check or change settings for Code Review Limits. Go to {link} and make sure that the option is enabled.");
         Ok(())
     }
 }
