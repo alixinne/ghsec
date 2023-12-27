@@ -18,6 +18,7 @@ jobs:
 
     outputs:
       version: ${{ steps.release.outputs.version }}
+      released-new-version: ${{ steps.release-check.outputs.released-new-version }}
 
     steps:
       - name: Checkout repository
@@ -72,6 +73,14 @@ jobs:
           git-user: 'Cocogitto'
           git-user-email: 'no-reply@vtavernier.github.io'
 
+      - name: Check if a new release happened
+        id: release-check
+        shell: bash
+        run: |
+          if [[ -f GITHUB_CHANGELOG.md ]]; then
+            echo "released-new-version=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build docs
         if: inputs.release
         shell: bash
@@ -102,7 +111,7 @@ jobs:
       inputs.release &&
       github.ref == 'refs/heads/master' &&
       github.event_name == 'push' &&
-      needs.build.outputs.version
+      needs.build.outputs.released-new-version
 
     concurrency:
       group: pages
