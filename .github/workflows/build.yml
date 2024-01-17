@@ -65,7 +65,7 @@ jobs:
 
       - name: Semver release
         id: release
-        uses: vtavernier/cocogitto-action@patch-1
+        uses: cocogitto/cocogitto-action@v3
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
