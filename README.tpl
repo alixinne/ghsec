@@ -1,4 +1,4 @@
-# [{{crate}}](https://github.com/vtavernier/ghsec)
+# [{{crate}}](https://github.com/alixinne/ghsec)
 
 {{readme}}
 

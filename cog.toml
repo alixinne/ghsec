@@ -29,9 +29,9 @@ path = "CHANGELOG.md"
 template = "remote"
 remote = "github.com"
 repository = "ghsec"
-owner = "vtavernier"
+owner = "alixinne"
 authors = [
-  { username = "vtavernier", signature = "Vincent Tavernier" }
+  { username = "alixinne", signature = "Alixinne" }
 ]
 
 [bump_profiles]

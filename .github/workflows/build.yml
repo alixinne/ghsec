@@ -71,7 +71,7 @@ jobs:
         with:
           release: ${{ inputs.release }}
           git-user: 'Cocogitto'
-          git-user-email: 'no-reply@vtavernier.github.io'
+          git-user-email: 'no-reply@alixinne.github.io'
 
       - name: Check if a new release happened
         id: release-check

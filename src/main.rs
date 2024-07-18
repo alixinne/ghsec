@@ -1,4 +1,4 @@
-//! [![main](https://github.com/vtavernier/ghsec/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/vtavernier/ghsec/actions/workflows/main.yml)
+//! [![main](https://github.com/alixinne/ghsec/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/alixinne/ghsec/actions/workflows/main.yml)
 //!
 //! ghsec is an opinionated linter (with fixes) for public GitHub repository security. It helps
 //! diagnose and fix potential security issues caused by GitHub repository settings that are
@@ -39,15 +39,15 @@
 //!
 //! ## Supported checks
 //!
-//! - [`branch_protections`](https://vtavernier.github.io/ghsec/ghsec/checks/branch_protections/index.html):
+//! - [`branch_protections`](https://alixinne.github.io/ghsec/ghsec/checks/branch_protections/index.html):
 //! check branch protection settings
-//! - [`code_review_limits`](https://vtavernier.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
+//! - [`code_review_limits`](https://alixinne.github.io/ghsec/ghsec/checks/code_review_limits/index.html):
 //! check account settings for code review limits
-//! - [`default_workflow_permissions`](https://vtavernier.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
+//! - [`default_workflow_permissions`](https://alixinne.github.io/ghsec/ghsec/checks/default_worfklow_permissions/index.html):
 //! use secure defaults for "Default Workflow Permissions"
-//! - [`fork_pull_request_workflows`](https://vtavernier.github.io/ghsec/ghsec/checks/fork_pull_request_workflows/index.html):
+//! - [`fork_pull_request_workflows`](https://alixinne.github.io/ghsec/ghsec/checks/fork_pull_request_workflows/index.html):
 //! check repository settings for public fork pull request workflow runs
-//! - [`repository_secrets`](https://vtavernier.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
+//! - [`repository_secrets`](https://alixinne.github.io/ghsec/ghsec/checks/repository_secrets/index.html):
 //! list repositories containing GitHub Actions secrets
 
 use std::str::FromStr;

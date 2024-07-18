@@ -3,8 +3,8 @@ name = "ghsec"
 description = "GitHub Security Linter"
 version = "0.5.0"
 edition = "2021"
-homepage = "https://vtavernier.github.io/ghsec/"
-repository = "https://github.com/vtavernier/ghsec.git"
+homepage = "https://alixinne.github.io/ghsec/"
+repository = "https://github.com/alixinne/ghsec.git"
 license = "MIT"
 
 [dependencies]
