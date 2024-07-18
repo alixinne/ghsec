@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.5.1](https://github.com/alixinne/ghsec/compare/1639526f42f144a4ea52bf44eec50b7bbad95c06..v0.5.1) - 2024-07-18
+#### Bug Fixes
+- update github profile information - ([3d0dbde](https://github.com/alixinne/ghsec/commit/3d0dbde95a9c57930193dcaa2b366dea46022439)) - Alix Tavernier
+#### Continuous Integration
+- switch to upstream cocogitto-action - ([733d6e2](https://github.com/alixinne/ghsec/commit/733d6e250567ee35f555d70320a0f87e6ff3e484)) - Vincent Tavernier
+- actually check for new releases for publishing to crates-io - ([b2d5645](https://github.com/alixinne/ghsec/commit/b2d5645ed8ae580eaa1d6e727d81d8d68c643804)) - Vincent Tavernier
+- fix secrets for crates-io job - ([1639526](https://github.com/alixinne/ghsec/commit/1639526f42f144a4ea52bf44eec50b7bbad95c06)) - Vincent Tavernier
+#### Miscellaneous Chores
+- add description in Cargo.toml - ([8213cc6](https://github.com/alixinne/ghsec/commit/8213cc6ddfeaf844769ddcd3f74136b6bb1be2f9)) - Vincent Tavernier
+
+- - -
+
 ## [v0.5.0](https://github.com/alixinne/ghsec/compare/v0.4.0..v0.5.0) - 2023-12-27
 #### Bug Fixes
 - expose clickable links as tracing fields - ([18678f1](https://github.com/alixinne/ghsec/commit/18678f191cd3d8118123b192677704323a958b5b)) - [@alixinne](https://github.com/alixinne)
