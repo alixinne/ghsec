@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     outputs:
       version: ${{ steps.release.outputs.version }}
@@ -103,7 +103,7 @@ jobs:
             !target
 
   crates-io:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     needs: build
 
@@ -142,7 +142,7 @@ jobs:
         run: cargo publish
 
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     needs: build
 
